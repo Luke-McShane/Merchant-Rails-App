@@ -12,13 +12,7 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :product_id %>
-    <%= form.number_field :product_id %>
-  </div>
-
-  <div class="field">
-    <%= form.label :order_id %>
-    <%= form.number_field :order_id %>
+    <%= form.label @order_item.product.title %>
   </div>
 
   <div class="field">
