@@ -3,8 +3,10 @@ module ProductsHelper
         number_to_currency price
     end
 
-    def print_stock(stock)
-        if stock > 0
+    def print_stock(stock, requested_amount = 1)
+        if (stock > 0 && stock < requested_amount)
+            content_tag(:span, "Insufficient stock (#{stock})", class: "low_stock")
+        elsif (stock > 0 && stock >= requested_amount)
             content_tag(:span, "In Stock: #{stock}", class: "in_stock")
             #<span class="in_stock">In Stock: (%{stock})</span>
         else
