@@ -24,9 +24,7 @@ class OrdersController < ApplicationController
   # POST /orders
   # POST /orders.json
   def create
-    puts order_params
     @order = Order.new(order_params)
-    puts @order.id
     respond_to do |format|
       if @order.save
         format.html { redirect_to @order, notice: 'Order was successfully created.' }
@@ -65,9 +63,6 @@ class OrdersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_order
-      puts params 
-      puts session[:order_id] 
-      #puts params[:id]
       #@order = Order.find(params[:id])
       @order = Order.find_by(id: session[:order_id])
     end

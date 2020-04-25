@@ -14,6 +14,7 @@
     <td><%= @order.order_items.count %></td>
   </tr>
   <tr>
+    <th>Customer</th>
     <th>Items</th>
     <th>Title</th>
     <th>Quantity</th>
@@ -23,6 +24,7 @@
   </tr>
   <% @order.order_items.each do |item| %>
     <tr>
+      <td><%= @order.user.name if @order.user %></td>
       <td><%= image_tag "products/#{item.product.image_url}" %></td>
       <td><%= item.product.title %></td>
       <td><%= link_to item.quantity, edit_order_item_path(item) %></td>

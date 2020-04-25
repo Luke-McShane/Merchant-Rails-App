@@ -1,14 +1,23 @@
 class SessionsController < ApplicationController
     def create
+        #binding.pry
         auth_data = request.env["omniauth.auth"]
-        #puts "AUTH_DATA = #{auth_data} END"
-        puts "PROVIDER:  #{auth_data["provider"]}"
-        puts "UID:  #{auth_data["uid"]}"
-        puts "NAME:  #{auth_data["info"]["name"]}"
-        #@user = User.find_or_create_by_auth(request.env["omniauth.auth"])
-        @user = User.where(:provider => auth_data["provider"], :uid => auth_data["uid"], :name => auth_data["info"]["name"]).first_or_create(auth_data["info"]["name"])
-        session[:user_id] = @user_id
+         #@user = User.where(:provider => auth_data["provider"], :uid => auth_data["uid"], :name => auth_data["info"]["name"]).first_or_create(auth_data["info"]["name"])
+         #@user = User.where(:name => auth_data["info"]["name"]).first_or_create(:provider => auth_data["provider"], :uid => auth_data["uid"], :name => auth_data["info"]["name"])
+         #@user = User.first_or_create(:provider => auth_data["provider"], :uid => auth_data["uid"], :name => auth_data["info"]["name"])
+         @user = User.find_or_create_by(:provider => auth_data["provider"], :uid => auth_data["uid"], :name => auth_data["info"]["name"])
+        puts "USER FROM SESSIONS CONTROLLER = #{@user}"
+        session[:user_id] = @user.id
+        #binding.pry
+        load_order
+        @order.update_attributes(user: @user)
         redirect_to products_path, notice: "Logged in as #{@user.name}"
+    end
+
+    def destroy
+        session[:user_id] = nil
+        session[:order_id] = nil
+        redirect_to root_path, notice: "You have logged out successfully. Goodbye!"
     end
 
     def googleAuth

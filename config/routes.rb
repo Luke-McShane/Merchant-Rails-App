@@ -9,5 +9,10 @@ Rails.application.routes.draw do
   # Routes for Google authentication
   get 'auth/:provider/callback', to: 'sessions#create'
   get 'auth/failure', to: redirect('/')
+
+  get "/login" => redirect( "/auth/google_oauth2"), as: :login
+  get "/logout" => "sessions#destroy", as: :logout
+
+  root to: 'products#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
