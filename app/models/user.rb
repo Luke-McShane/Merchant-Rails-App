@@ -1,5 +1,6 @@
 class User < ApplicationRecord
     has_many :orders
+    has_many :addresses #, :optional => :true
 
     def self.from_omniauth(auth)
       # Creates a new user only if it doesn't exist

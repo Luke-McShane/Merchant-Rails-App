@@ -34,6 +34,18 @@
       <td><%= link_to 'Remove', item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
     </tr>
   <% end %>
+  <% if current_user %>
+    <%= form_for @order do |f|  %>
+      <tr>
+        <th>Shipping To:</th>
+        <td>
+          <%= f.select :address_id, current_user.addresses.collect{ |a| [a.to_s, a.id] } %>
+          <%= link_to "Add new address", new_address_path %>
+        </td>
+        <td><%= f.submit "Submit Order" %></td>
+      </tr>
+    <% end %>
+  <% end %>
   <tr>
     <td><%= link_to 'Home', products_path %></td>
     <td><%= link_to "Empty Cart", @order, data: { confirm: 'Are you sure?' }, method: :delete %></td>

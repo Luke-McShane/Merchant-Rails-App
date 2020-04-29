@@ -4,11 +4,11 @@ class ApplicationController < ActionController::Base
 
   private
   def current_user
+    #binding.pry
       @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
 
   def load_order
-    puts "USER = #{@user}"
     #binding.pry
     #@order = Order.find_or_initialize_by(id: session[:order_id], status: "unsubmitted", user_id: session[:user_id])
     @order = Order.find_or_initialize_by(id: session[:order_id], status: "unsubmitted")
